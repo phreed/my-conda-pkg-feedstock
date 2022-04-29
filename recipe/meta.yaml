@@ -1,0 +1,6 @@
+package:
+    name: my-conda-pkg
+    version: 1.0
+build:
+    number: 0
+
