@@ -1,1 +1,9 @@
-{}
+github:
+  user_or_org: phreed
+channels:
+  targets:
+    - [mesomorph, main]
+provider:
+  osx: Github-Actions
+  linux: Github-Actions
+  win: Github-Actions

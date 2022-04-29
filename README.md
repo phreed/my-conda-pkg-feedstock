@@ -7,7 +7,7 @@ Package license:
 
 Feedstock license: [BSD-3-Clause](https://github.com/phreed/my-conda-pkg-feedstock/blob/master/LICENSE.txt)
 
-Summary: 
+Summary: See the [history](HISTORY.adoc) for a description about the process for building this sample.
 
 Current build status
 ====================

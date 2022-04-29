@@ -1,0 +1,99 @@
+d:
+ls
+conda smithy register-github --user phreed ip\staged-recipes\recipes\oracle-jdk
+mamba smithy register-github --user phreed ip\staged-recipes\recipes\oracle-jdk
+cd ip
+git clone https://github.com/conda-forge/conda-smithy.git
+cd conda-smithy
+conda install --file requirements.txt -c conda-forge
+python setup.py install
+cd ..
+mamba init -h
+conda -h
+mamba skeleton -h
+
+I followed link:https://github.com/conda-forge/conda-smithy#making-a-new-feedstock[the directions].
+There are other tutorials out there but `conda-smithy` is moving quickly.
+Hopefully, this case study will be helpful in giving some indication about where things might be going.
+
+[source,cmd]
+----
+mkdir my-conda-pkg
+cd my-conda-pkg
+mkdir recipe
+----
+Create the file `recipe/meta.yaml`.
+[source,yaml]
+----
+include::recipe/meta.yaml[]
+----
+
+[source,cmd]
+----
+mamba smithy init recipe
+----
+This makes the directory and git repository `my-conda-pkg-feedstock`.
+I want the branch to be called `main` rather than `master`.
+
+[source,cmd]
+----
+git config --global init.defaultBranch main
+git branch -m main
+rm my-conda-pkg-feedstock
+mamba smithy init recipe
+----
+
+The feedstock needs to be registered with github.
+
+[source,cmd]
+----
+mamba smithy register-github --user phreed ./my-conda-pkg-feedstock
+----
+
+The tricky part of this is the registration of all the tokens required by the various build tooling.
+The tokens are placed in the ~/.conda-smithy folder and are given names corresponding to the tool.
+
+[source,text]
+----
+.conda-smithy
+  anaconda.token
+  appveyor.token
+  azure.token
+  circle.token
+  drone.token
+  github.token
+  travis.token
+----
+Each of these files contains the token and only the token.
+
+They frequently change their usage policies and where to acquire their respective tokens.
+Having many builders is important for `conda-forge` as it needs to be concerned with issues like performance.
+For building channels that parallel `conda-forge` supporting most of these is problematic.
+link:https://github.com/conda-forge/conda-smithy/tree/main/conda_smithy/templates[The list of templates]
+for each of these build tools may be informative.
+It is helpful to disable the tools which you do not need.
+See `mamba smithy register-ci -h` for a list of all the flags.
+
+I only use the tokens for `github` which does my builds, and `anaconda` which is my target.
+
+[source,cmd]
+----
+mamba smithy register-ci --user phreed --without-drone --without-azure --without-appveyor --feedstock_directory ./my-conda-pkg-feedstock
+----
+
+Now build the scripts needed by the specified tooling.
+
+[source,cmd]
+----
+mamba smithy rerender --feedstock_directory  .\my-conda-pkg-feedstock
+----
+Finally, push the configured feedstock to github for building and deployment.
+
+[source,cmd]
+----
+cd my-conda-pkg-feedstock
+git commit -m "MNT: Re-rendered with conda-build 3.21.8, conda-smithy 3.19.0, and conda-forge-pinning 2022.04.28.22.31.46"
+git push upstream main
+----
+
+That seems to do the trick.
