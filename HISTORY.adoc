@@ -31,6 +31,12 @@ Now the directory and git repository are made.
 mamba smithy init .\recipe
 ----
 
+Configure the upload channels.
+[source,yaml]
+----
+include::conda-forge.yml[]
+----
+
 The feedstock needs to be registered with github.
 First the tokens need to be made available to `mamba smithy`.
 The tokens are placed in the `~/.conda-smithy` folder and are given names corresponding to the tool.
