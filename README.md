@@ -13,28 +13,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>CircleCI</td>
-    <td>
-      <a href="https://circleci.com/gh/phreed/my-conda-pkg-feedstock">
-        <img alt="Linux" src="https://img.shields.io/circleci/project/github/phreed/my-conda-pkg-feedstock/master.svg?label=Linux">
-      </a>
-    </td>
-  </tr><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://app.travis-ci.com/phreed/my-conda-pkg-feedstock">
-        <img alt="linux" src="https://img.shields.io/travis/com/phreed/my-conda-pkg-feedstock/master.svg?label=Linux">
-      </a>
-    </td>
-  </tr><tr>
-    <td>Appveyor</td>
-    <td>
-      <a href="https://ci.appveyor.com/project/phreed/my-conda-pkg-feedstock/branch/master">
-        <img alt="windows" src="https://img.shields.io/appveyor/ci/phreed/my-conda-pkg-feedstock/master.svg?label=Windows">
-      </a>
-    </td>
-  </tr>
+<table>
 </table>
 
 Current release info
