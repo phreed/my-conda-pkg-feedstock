@@ -1,20 +1,11 @@
-d:
-ls
-conda smithy register-github --user phreed ip\staged-recipes\recipes\oracle-jdk
-mamba smithy register-github --user phreed ip\staged-recipes\recipes\oracle-jdk
-cd ip
-git clone https://github.com/conda-forge/conda-smithy.git
-cd conda-smithy
-conda install --file requirements.txt -c conda-forge
-python setup.py install
-cd ..
-mamba init -h
-conda -h
-mamba skeleton -h
+# The Process for Creating this Conda-Smithy Feedstock
 
 I followed link:https://github.com/conda-forge/conda-smithy#making-a-new-feedstock[the directions].
 There are other tutorials out there but `conda-smithy` is moving quickly.
 Hopefully, this case study will be helpful in giving some indication about where things might be going.
+
+Note that this feedstock repository was constructed from within a `my-conda-pkg` directory.
+That `my-conda-pkg` directory was created and populated as follows:
 
 [source,cmd]
 ----
@@ -28,22 +19,24 @@ Create the file `recipe/meta.yaml`.
 include::recipe/meta.yaml[]
 ----
 
-[source,cmd]
-----
-mamba smithy init recipe
-----
-This makes the directory and git repository `my-conda-pkg-feedstock`.
+This is all that is needed to create this git repository `my-conda-pkg-feedstock`.
 I want the branch to be called `main` rather than `master`.
-
 [source,cmd]
 ----
 git config --global init.defaultBranch main
-git branch -m main
-rm my-conda-pkg-feedstock
-mamba smithy init recipe
+----
+Now the directory and git repository are made.
+[source,cmd]
+----
+mamba smithy init .\recipe
 ----
 
 The feedstock needs to be registered with github.
+First the tokens need to be made available to `mamba smithy`.
+The tokens are placed in the `~/.conda-smithy` folder and are given names corresponding to the tool.
+
+anaconda.token::: https://anaconda.org/mesomorph/settings/access
+github.token:::  https://github.com/settings/tokens
 
 [source,cmd]
 ----
@@ -51,25 +44,14 @@ mamba smithy register-github --user phreed ./my-conda-pkg-feedstock
 ----
 
 The tricky part of this is the registration of all the tokens required by the various build tooling.
-The tokens are placed in the ~/.conda-smithy folder and are given names corresponding to the tool.
+The tokens are placed in files in the `~/.conda-smithy` folder and are given names corresponding to the tool.
+**Each of these files contains the token and only the token**.
 
-[source,text]
-----
-.conda-smithy
-  anaconda.token
-  appveyor.token
-  azure.token
-  circle.token
-  drone.token
-  github.token
-  travis.token
-----
-Each of these files contains the token and only the token.
-
-They frequently change their usage policies and where to acquire their respective tokens.
+These tools frequently change their usage policies and where to acquire their respective tokens.
 Having many builders is important for `conda-forge` as it needs to be concerned with issues like performance.
-For building channels that parallel `conda-forge` supporting most of these is problematic.
-link:https://github.com/conda-forge/conda-smithy/tree/main/conda_smithy/templates[The list of templates]
+But, for building channels that parallel `conda-forge` supporting most of these tools is a headache.
+If you need one of these tools
+link:https://github.com/conda-forge/conda-smithy/tree/main/conda_smithy/templates[the template]
 for each of these build tools may be informative.
 It is helpful to disable the tools which you do not need.
 See `mamba smithy register-ci -h` for a list of all the flags.
