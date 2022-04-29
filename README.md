@@ -1,13 +1,18 @@
 About my-conda-pkg
 ==================
 
-Home: 
+Home: https://github.com/phreed/my-conda-pkg-feedstock
 
-Package license: 
+Package license: MIT
 
 Feedstock license: [BSD-3-Clause](https://github.com/phreed/my-conda-pkg-feedstock/blob/master/LICENSE.txt)
 
-Summary: See the [history](HISTORY.adoc) for a description about the process for building this sample.
+Summary: Meta-package for Oracle JDK
+
+Development: https://github.com/phreed/my-conda-pkg-feedstock
+
+This module is a sample.
+
 
 Current build status
 ====================
@@ -98,4 +103,5 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@phreed](https://github.com/phreed/)
 

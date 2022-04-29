@@ -2,5 +2,17 @@ package:
     name: my-conda-pkg
     version: 1.0
 build:
-    number: 0
+    number: 1
+about:
+    home: https://github.com/phreed/my-conda-pkg-feedstock
+    license: MIT
+    license_file: LICENSE.txt
+    summary: 'Meta-package for Oracle JDK'
+    description: |
+        This module is a sample.
+    dev_url: https://github.com/phreed/my-conda-pkg-feedstock
+extra:
+    recipe-maintainers:
+        - 'phreed'
+
 
